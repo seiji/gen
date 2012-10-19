@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require '<%= config[:name] %>'
+
+<%=config[:constant_name]%>::CLI.start

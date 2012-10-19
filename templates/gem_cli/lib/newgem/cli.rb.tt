@@ -1,0 +1,16 @@
+require 'thor'
+<%- config[:constant_array].each_with_index do |c,i| -%>
+<%= '  '*i %>module <%= c %>
+<%- end -%>
+<%= '  '*config[:constant_array].size %>class CLI < Thor
+<%= '  '*config[:constant_array].size %>  def initialize(*args)
+<%= '  '*config[:constant_array].size %>    super
+<%= '  '*config[:constant_array].size %>  end
+<%= '  '*config[:constant_array].size %>  desc "red", "print red"
+<%= '  '*config[:constant_array].size %>  def red(txt)
+<%= '  '*config[:constant_array].size %>    say txt, :red
+<%= '  '*config[:constant_array].size %>  end
+<%= '  '*config[:constant_array].size %>end
+<%- (config[:constant_array].size-1).downto(0) do |i| -%>
+<%= '  '*i %>end
+<%- end -%>
