@@ -47,7 +47,42 @@ module Gen
       create_after(target)
     end
 
+    desc "sinatra", "create skelton sinatra app"
+    def sinatra(name)
+      name = name.chomp("/")
+      target, opts = create_before(name)
+      Gen::CLI.source_root("templates/sinatra")
+
+      template_dir( target, ".bundle",        opts)
+      template_file(target, ".gitignore.tt",  opts)
+      template_file(target, "Gemfile.tt",     opts)
+      template_file(target, "LiCENSE.txt.tt", opts)
+      template_file(target, "README.md.tt",   opts)
+      template_file(target, "Rakefile.tt",    opts)
+      template_file(target, "app.rb.tt",      opts)
+      template_dir( target, "app",            opts)
+      template_dir( target, "config",         opts)
+      template_file(target, "config.ru",      opts)
+      template_dir( target, "db",             opts)
+      template_dir( target, "doc",            opts)
+      template_dir( target, "lib",            opts)
+      template_dir( target, "log",            opts)
+      template_dir( target, "public",         opts)
+      template_dir( target, "script",         opts)
+      template_dir( target, "test",           opts)
+      template_dir( target, "tmp",            opts)
+      create_after(target)
+    end
+
     private
+    def template_file(target, name, opts)
+      name_out ||= name.sub(/\.tt$/, "")
+      template(name, File.join(target, name_out), opts)
+    end
+    def template_dir(target, name, opts)
+      directory(name, File.join(target, name), opts)
+    end
+
     def create_before(name)
       name = name.chomp("/")
       target = File.join(Dir.pwd, name)

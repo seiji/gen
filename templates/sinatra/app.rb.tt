@@ -1,0 +1,11 @@
+<%- config[:constant_array].each_with_index do |c,i| -%>
+<%= '  '*i %>class App < Sinatra::Base
+<%- end -%>
+<%= '  '*config[:constant_array].size %>set :public_folder, "public"
+<%= '  '*config[:constant_array].size %>set :views, "app/views"
+<%= '  '*config[:constant_array].size %>get "/" do
+<%= '  '*config[:constant_array].size %>  haml :"index"
+<%= '  '*config[:constant_array].size %>end
+<%- (config[:constant_array].size-1).downto(0) do |i| -%>
+<%= '  '*i %>end
+<%- end -%>
