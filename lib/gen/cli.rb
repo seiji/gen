@@ -72,7 +72,15 @@ module Gen
       template_dir( target, "script",         opts)
       template_dir( target, "test",           opts)
       template_dir( target, "tmp",            opts)
-      create_after(target)
+
+      create_after(target) do
+        Bundler.with_clean_env do
+          run "bundle install"
+          run "bundle exec wheneverize"     # write config/schedule.rb
+          run "rm config/.gitkeep"
+        end
+        run "git init"
+      end
     end
 
     private
@@ -100,8 +108,11 @@ module Gen
         :email          => git_user_email.empty? ? "TODO: Write your email address" : git_user_email
       }
     end
-    def create_after(target)
-      Dir.chdir(target) { `git init` }
+
+    def create_after(target, &block)
+      Dir.chdir(target){
+        block.call
+      }
     end
   end
 end

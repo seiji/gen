@@ -5,4 +5,4 @@ gem 'haml'
 gem 'coffee-script'
 
 gem 'sprockets', '~> 2.0'
-
+gem 'whenever', '0.7.3'
