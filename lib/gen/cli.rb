@@ -13,7 +13,7 @@ module Gen
       name = name.chomp("/")
       target, opts = create_before(name)
 
-      Gen::CLI.source_root("templates/gem_cli")
+      Gen::CLI.source_root(File.join(Gen.templates, 'gem_cli'))
       template(File.join("Gemfile.tt"),               File.join(target, "Gemfile"),                opts)
       template(File.join("Rakefile.tt"),              File.join(target, "Rakefile"),               opts)
       template(File.join("LICENSE.txt.tt"),           File.join(target, "LICENSE.txt"),            opts)
@@ -35,7 +35,8 @@ module Gen
     def motion(name)
       name = name.chomp("/")
       target, opts = create_before(name)
-      Gen::CLI.source_root("templates/motion")
+
+      Gen::CLI.source_root(File.join(Gen.templates, 'motion'))
       template(File.join("Rakefile.tt"),              File.join(target, "Rakefile"),               opts)
       template(File.join("LICENSE.txt.tt"),           File.join(target, "LICENSE.txt"),            opts)
       template(File.join("README.md.tt"),             File.join(target, "README.md"),              opts)
@@ -51,8 +52,8 @@ module Gen
     def sinatra(name)
       name = name.chomp("/")
       target, opts = create_before(name)
-      Gen::CLI.source_root("templates/sinatra")
 
+      Gen::CLI.source_root(File.join(Gen.templates, 'sinatra'))
       template_dir( target, ".bundle",        opts)
       template_file(target, ".gitignore.tt",  opts)
       template_file(target, "Gemfile.tt",     opts)
