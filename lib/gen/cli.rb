@@ -110,9 +110,11 @@ module Gen
     end
 
     def create_after(target, &block)
-      Dir.chdir(target){
-        block.call
-      }
+      if block
+        Dir.chdir(target){
+          block.call
+        }
+      end
     end
   end
 end
