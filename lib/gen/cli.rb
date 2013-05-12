@@ -13,7 +13,7 @@ module Gen
       name = name.chomp("/")
       target, opts = create_before(name)
 
-      Gen::CLI.source_root(File.join(Gen.templates, 'gem_cli'))
+      Gen::CLI.source_root(File.join(Gen.templates, 'cli'))
       template(File.join("Gemfile.tt"),               File.join(target, "Gemfile"),                opts)
       template(File.join("Rakefile.tt"),              File.join(target, "Rakefile"),               opts)
       template(File.join("LICENSE.txt.tt"),           File.join(target, "LICENSE.txt"),            opts)
@@ -48,12 +48,12 @@ module Gen
       create_after(target)
     end
 
-    desc "sinatra", "create skelton sinatra app"
-    def sinatra(name)
+    desc "web", "create skelton web app using sinatra"
+    def web(name)
       name = name.chomp("/")
       target, opts = create_before(name)
 
-      Gen::CLI.source_root(File.join(Gen.templates, 'sinatra'))
+      Gen::CLI.source_root(File.join(Gen.templates, 'web'))
       template_dir( target, ".bundle",        opts)
       template_file(target, ".gitignore.tt",  opts)
       template_file(target, "Gemfile.tt",     opts)
@@ -62,6 +62,7 @@ module Gen
       template_file(target, "Rakefile.tt",    opts)
       template_file(target, "app.rb.tt",      opts)
       template_dir( target, "app",            opts)
+      template_dir( target, "bin",            opts)
       template_dir( target, "config",         opts)
       template_file(target, "config.ru",      opts)
       template_dir( target, "db",             opts)
@@ -78,6 +79,7 @@ module Gen
           run "bundle install"
           run "bundle exec wheneverize"     # write config/schedule.rb
           run "rm config/.gitkeep"
+          run "bundle exec guard init"
         end
         run "git init"
       end
